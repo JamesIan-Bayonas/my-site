@@ -1,0 +1,11 @@
+# Local AI Interaction
+ollama
+
+# Mathematical Optimization & Graph Theory
+networkx
+scipy
+numpy
+
+# Clean Terminal UI / CLI Engine
+textual
+rich
