@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # Service 1: The Local AI Engine
+  ollama-core:
+    image: ollama/ollama:latest
+    container_name: ecoroute_ollama
+    volumes:
+      - ollama_storage:/root/.ollama
+    ports:
+      - "11434:11434"
+    restart: always
+
+  # Service 2: Our Custom EcoRoute-AI Computational Stack
+  optimization-engine:
+    build: .
+    container_name: ecoroute_engine
+    volumes:
+      - ./dispatch_history:/app/dispatch_history
+      - ./test_input.txt:/app/test_input.txt
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_HOST=http://ollama-core:11434
+    depends_on:
+      - ollama-core
+    restart: always
+
+volumes:
+  ollama_storage:
